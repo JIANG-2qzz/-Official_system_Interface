@@ -44,7 +44,8 @@ export class UploadService {
           if (respInfo.statusCode == 200) {
             resolve(`${QINIU_SECRET.qn_host}/${respBody.key}`)
           } else {
-            throw new InternalServerErrorException(respErr.message)
+            console.log(respInfo.statusCode)
+            // throw new InternalServerErrorException(respErr.message)
           }
         },
       )

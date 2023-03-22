@@ -4,6 +4,7 @@ import { Prop, Schema } from '@nestjs/mongoose'
 import { PartialType } from '@nestjs/swagger'
 
 import { CategoryModel } from '../category/category.model'
+import { OrgModel } from '../organization/organization.model'
 import { UserModel } from '../user/user.model'
 
 @Schema({
@@ -45,6 +46,24 @@ export class PostModel extends Document {
     ref: UserModel.name,
   })
   user: UserModel
+
+  @Prop({
+    type: () => mongoose.Schema.Types.ObjectId,
+    ref: OrgModel.name,
+  })
+  permission: OrgModel
+
+  @Prop()
+  backAdvise?: string
+
+  @Prop()
+  GWstatus?: string
+
+  @Prop()
+  institutionCode?: string
+
+  @Prop()
+  institutionNameDown?: string
 }
 
 export class PartialPostModel extends PartialType(PostModel) {}

@@ -8,7 +8,9 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { AdvertisementModule } from './modules/advertisement/advertisement.module'
 import { AggregateModule } from './modules/aggregate/aggregate.module'
 import { CategoryModule } from './modules/category/category.module'
+import { InstitutionModule } from './modules/institution/institution.module'
 import { OptionModule } from './modules/option/option.module'
+import { OrganizationModule } from './modules/organization/organization.module'
 import { PostModule } from './modules/post/post.module'
 import { TabModule } from './modules/tab/tab.module'
 import { UploadModule } from './modules/upload/upload.module'
@@ -30,6 +32,8 @@ import { LoggerModule } from './processors/logger/logger.module'
     OptionModule,
     AggregateModule,
     TabModule,
+    OrganizationModule,
+    InstitutionModule,
   ],
   controllers: [AppController],
   providers: [

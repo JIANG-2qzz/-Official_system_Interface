@@ -32,4 +32,16 @@ export class UserModel extends Document {
 
   @Prop()
   admin: boolean
+
+  @Prop()
+  permission: string
+
+  @Prop()
+  institution: string
+
+  @Prop()
+  institutionCode: string
+
+  @Prop()
+  institutionNameDown: string
 }

@@ -20,6 +20,14 @@ export class UserDto {
   @IsString({ message: '头像' })
   @IsOptional()
   avatar: string
+
+  @IsString({ message: '机构名称' })
+  @IsOptional()
+  institutionNameDown: string
+
+  @IsString({ message: '机构代码' })
+  @IsOptional()
+  institutionCode: string
 }
 
 export class UserDetailDto extends UserDto {

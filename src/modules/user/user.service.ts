@@ -67,6 +67,10 @@ export class UserService {
     return this.userModel.updateOne({ _id: _user._id }, data)
   }
 
+  async reqUser() {
+    return this.userModel.find()
+  }
+
   getAdminInfo() {
     return this.userModel.findOne({ admin: true })
   }
@@ -90,5 +94,12 @@ export class UserService {
 
   get model() {
     return this.userModel
+  }
+
+  async newData(body, id) {
+    const _user = await this.userModel.findOne({ _id: id })
+    // const data = {..._user,...body}
+    // console.log(data,"_user")
+    return this.userModel.updateOne({ _id: id }, body)
   }
 }

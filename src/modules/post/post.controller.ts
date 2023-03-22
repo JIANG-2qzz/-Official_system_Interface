@@ -30,6 +30,7 @@ export class PostController {
   @Post('/')
   @Auth()
   async create(@Body() post: PostDto, @CurrentUser() user: UserModel) {
+    console.log(post, 'post')
     return await this.postService.create(post, user)
   }
 
@@ -42,6 +43,7 @@ export class PostController {
   @Get('/')
   @ApiOperation({ summary: '分页获取博文' })
   async getPaginate(@Query() postList: PostList) {
+    console.log(postList, '请求收到')
     return this.postService.postPaginate(postList)
   }
 

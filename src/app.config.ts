@@ -18,6 +18,7 @@ export const MONGO_DB = {
     if (process.env.MONGO_URL) {
       return process.env.MONGO_URL
     }
+    console.log(`mongodb://${this.host}:${this.port}/${this.dbName}`)
     return `mongodb://${this.host}:${this.port}/${this.dbName}`
   },
 }

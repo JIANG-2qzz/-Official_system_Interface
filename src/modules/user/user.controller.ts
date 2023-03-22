@@ -53,6 +53,12 @@ export class UserController {
     return this.userService.getAdminInfo()
   }
 
+  @Get('/alluser')
+  @ApiOperation({ summary: '获取所有人信息' })
+  async allInfo() {
+    return this.userService.reqUser()
+  }
+
   @Get()
   @ApiOperation({ summary: '随机获得指定数量的用户信息' })
   async authorRank(@Param('size') size: number) {
@@ -88,5 +94,10 @@ export class UserController {
   @ApiOperation({ summary: '获取指定用户名的信息' })
   getUserInfo(@Param('username') username: string) {
     return this.userService.model.findOne({ username })
+  }
+
+  @Put('/newdata/:_id')
+  async putNewdata(@Body() body, @Param('_id') id: string) {
+    return await this.userService.newData(body, id)
   }
 }

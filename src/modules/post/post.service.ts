@@ -11,6 +11,7 @@ import { InjectModel } from '@nestjs/mongoose'
 
 import { CategoryModel } from '../category/category.model'
 import { CategoryService } from '../category/category.service'
+import { OrganizationService } from '../organization/organization.service'
 import { UserModel } from '../user/user.model'
 import { PostDto, PostList, Sort } from './post.dto'
 import { PartialPostModel, PostModel } from './post.model'
@@ -24,7 +25,10 @@ export class PostService {
     private readonly categoryModel: Model<CategoryModel>,
     @Inject(forwardRef(() => CategoryService))
     private categoryService: CategoryService,
+    @Inject(forwardRef(() => OrganizationService))
+    private organizationService: OrganizationService,
   ) {}
+
   async create(post: PostDto, user: UserModel) {
     try {
       await this.categoryModel.findById(post.category)
@@ -75,8 +79,20 @@ export class PostService {
 
   // FIXME 无法查询到当前页面之外的文章，需要分组查询
   async postPaginate(post: PostList) {
-    const { pageCurrent, pageSize, category, tag, sort } = post
+    const {
+      pageCurrent,
+      pageSize,
+      category,
+      tag,
+      sort,
+      permission,
+      institutionCode,
+    } = post
+    console.log(institutionCode, 'institutionCode')
     const _category = await this.categoryService.find(category)
+    const _permission = await this.organizationService.findOne({
+      _id: permission ? permission : '63f70c45251ed5713b7f6fed',
+    })
     const postList = await this.postModel.populate(
       await this.postModel.aggregate([
         {
@@ -94,12 +110,21 @@ export class PostService {
             cover: 1,
             read: 1,
             updatedAt: 1,
+            permission: 1,
+            backAdvise: 1,
+            GWstatus: 1,
+            institutionCode: 1,
+            institutionNameDown: 1,
           },
         },
         {
           $match: {
             category: category ? { $eq: _category.id } : { $exists: true },
             tags: tag ? { $eq: tag } : { $exists: true },
+            permission: _permission.id,
+            institutionCode: institutionCode
+              ? institutionCode
+              : { $exists: 'false' },
           },
         },
         {
@@ -137,6 +162,7 @@ export class PostService {
   }
 
   async updateById(id: string, post: PartialPostModel) {
+    console.log(id, post, '修改文章')
     const oldPost = await this.postModel.findById(id, 'category')
     if (!oldPost) {
       throw new BadRequestException('文章不存在')

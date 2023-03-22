@@ -36,6 +36,21 @@ export class PostDto {
 
   @IsBoolean({ message: '广告' })
   ad: boolean
+
+  @IsString({ message: '权限' })
+  permission: string
+
+  @IsString({ message: '状态' })
+  GWstatus: string
+
+  @IsString({ message: '退回' })
+  backAdvise: string
+
+  @IsString({ message: '机构' })
+  institutionCode: string
+
+  @IsString({ message: '机构名字' })
+  institutionNameDown: string
 }
 
 export class PostList extends paginateDto {
@@ -50,6 +65,18 @@ export class PostList extends paginateDto {
   @IsEnum(Sort)
   @IsOptional()
   sort?: Sort
+
+  @IsString()
+  @IsOptional()
+  permission?: string
+
+  @IsString()
+  @IsOptional()
+  institutionCode?: string
+
+  @IsString()
+  @IsOptional()
+  institutionNameDown?: string
 }
 
 export class PaginateDto {

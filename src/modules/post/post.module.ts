@@ -1,11 +1,12 @@
 import { Module, forwardRef } from '@nestjs/common'
 
 import { CategoryModule } from '../category/category.module'
+import { OrganizationModule } from '../organization/organization.module'
 import { PostController } from './post.controller'
 import { PostService } from './post.service'
 
 @Module({
-  imports: [forwardRef(() => CategoryModule)],
+  imports: [forwardRef(() => CategoryModule), OrganizationModule],
   controllers: [PostController],
   providers: [PostService],
   exports: [PostService],
